@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.client.RestTemplate;
  
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -26,5 +27,10 @@ public class MongoConfig {
     @Bean
     public MongoTemplate mongoTemplate() {
         return new MongoTemplate(mongoClient(), database);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

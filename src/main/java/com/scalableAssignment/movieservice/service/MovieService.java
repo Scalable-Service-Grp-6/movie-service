@@ -38,14 +38,12 @@ public class MovieService {
 
     public Movie addMovie(Movie movie, String token) {
     	if(useAuth) {
-    		System.out.println("Auth required...");
-    		System.out.println("Calling "+auth_url);
     		RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
-            headers.setBearerAuth(token); 
+            headers.set("Authorization", token);
             HttpEntity<String> entity = new HttpEntity<>(headers);
             try {
-                ResponseEntity<String> response = restTemplate.exchange(auth_url, HttpMethod.GET, entity, String.class);
+                ResponseEntity<String> response = restTemplate.exchange("http://"+auth_url+"/users/verify/user?role=admin", HttpMethod.GET, entity, String.class);
                 if (response.getStatusCode() != HttpStatus.OK) {
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to add movies");
                 }
