@@ -20,5 +20,6 @@ public class Movie {
     private String language;
     private String releaseDate;
     private List<String> cast;
+    private List<Theatre> theatres;    
 
 }
