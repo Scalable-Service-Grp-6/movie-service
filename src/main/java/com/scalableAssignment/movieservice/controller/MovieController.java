@@ -12,19 +12,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scalableAssignment.movieservice.model.Movie;
+import com.scalableAssignment.movieservice.model.Theatre;
 import com.scalableAssignment.movieservice.service.MovieService;
+import com.scalableAssignment.movieservice.service.TheatreService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
 
-	private final MovieService movieService;
-
-	public MovieController(MovieService movieService) {
-		this.movieService = movieService;
+	@Autowired
+	private  MovieService movieService;
+	@Autowired
+	private  TheatreService theatreService;	
+	
+	@PostMapping("/addTheatre")
+	public Theatre addTheatre(@RequestBody Theatre theatre) {
+	    return theatreService.addTheatre(theatre);
 	}
-
+	
+    @GetMapping("/theaters")
+    public List<Theatre> getAllTheatres() {
+        return theatreService.getAllTheatres();
+    }
 	@GetMapping
 	public ResponseEntity<List<Movie>> getAllMovies() {
 		return ResponseEntity.ok(movieService.getAllMovies());
