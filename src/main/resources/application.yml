@@ -1,8 +1,10 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/movies
-      database: movies
+      uri: ${MONGODB_URL}
+      username: ${MONGODB_ADMIN_USER_NAME}
+      password: ${MONGODB_ADMIN_USER_PASSWORD}
+      database: ${MONGODB_USER_DB}
 
   autoconfigure:
     exclude:
@@ -10,5 +12,13 @@ spring:
 
 server:
   port: 8081
-#auth_url: ${AUTH_URL} 
+auth_url: ${AUTH_URL} 
+
 use_auth: true 
+
+logging:
+  level:
+    root: INFO
+    com:
+      scalableAssignment:
+         movieservice: DEBUG
