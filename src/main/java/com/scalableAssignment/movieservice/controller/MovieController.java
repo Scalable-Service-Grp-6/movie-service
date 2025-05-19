@@ -16,11 +16,14 @@ import com.scalableAssignment.movieservice.model.Theatre;
 import com.scalableAssignment.movieservice.service.MovieService;
 import com.scalableAssignment.movieservice.service.TheatreService;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
 @RestController
 @RequestMapping("/movies")
+@Slf4j
 public class MovieController {
 
 	@Autowired
@@ -30,26 +33,31 @@ public class MovieController {
 	
 	@PostMapping("/addTheatre")
 	public Theatre addTheatre(@RequestBody Theatre theatre) {
+		log.info("addTheatre() start...");
 	    return theatreService.addTheatre(theatre);
 	}
 	
     @GetMapping("/theaters")
     public List<Theatre> getAllTheatres() {
+    	log.info("getAllTheatres() start...");
         return theatreService.getAllTheatres();
     }
 	@GetMapping
 	public ResponseEntity<List<Movie>> getAllMovies() {
+		log.info("getAllMovies() start...");
 		return ResponseEntity.ok(movieService.getAllMovies());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Movie> getMovieById(@PathVariable(name = "id") String id) {
+		log.info("getMovieById() start with movieId:"+id);
 		return movieService.getMovieById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 
 	@PostMapping
 	public ResponseEntity<Movie> addMovie(@RequestBody Movie movie,
 			@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader) {
+		log.info("addMovie() start with movieId:"+movie.getId());
 		return ResponseEntity.ok(movieService.addMovie(movie, authHeader));
 	}
 }
